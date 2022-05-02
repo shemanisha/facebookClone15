@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 app.use(cors());
-
+app.use(express.json());
 //routes
 readdirSync("./routes").map((route) => {
   app.use("/", require("./routes/" + route));
