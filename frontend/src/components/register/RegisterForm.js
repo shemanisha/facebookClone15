@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
-import { Navigate, useNavigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterForm() {
   const dispatch = useDispatch();
