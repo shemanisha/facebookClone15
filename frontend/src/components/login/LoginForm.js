@@ -68,7 +68,7 @@ export default function LoginForm() {
           <div className="sign_splitter"></div>
           <button className="blue_button open_signup">Create Account</button>
         </div>
-        <Link to=" " className="sign_extra">
+        <Link to="/" className="sign_extra">
           <b>Create a page </b>
           for celebrity , brand or business.
         </Link>
