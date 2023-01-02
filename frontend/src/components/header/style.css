@@ -22,7 +22,7 @@ header {
   border-radius: 50%;
   cursor: pointer;
   display: flex;
-  align-items: flex;
+  align-items: center;
   justify-content: center;
 }
 .search {

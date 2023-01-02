@@ -1,9 +1,10 @@
 import { useState } from "react";
+import Picker from "emoji-picker-react";
 import "./style.css";
 
 export default function CreatePostPopUp({ user }) {
   const [text, setText] = useState("");
-  const [showPrev, setShowPrev] = useState("");
+  const [showPrev, setShowPrev] = useState(false);
   return (
     <div>
       <div className="blur">
@@ -30,10 +31,10 @@ export default function CreatePostPopUp({ user }) {
               </div>
             </div>
           </div>
-          <div className="flex_center">
+          {/* <div className="flex_center">
             {!showPrev && (
               <textarea
-                maxlength="100"
+                maxLength="100"
                 value={text}
                 placeholder={`whats on your mind?`}
                 className="post_input"
@@ -41,9 +42,11 @@ export default function CreatePostPopUp({ user }) {
               ></textarea>
             )}
             <div className="post_emojis_wrap">
-              <div className="comment_emoji_picker rlmove"></div>
+              <div className="comment_emoji_picker rlmove">
+                <Picker />
+              </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
