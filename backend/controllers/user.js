@@ -6,6 +6,7 @@ const {
 } = require("../helpers/validation");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../helpers/tokens");
+
 exports.register = async (req, res) => {
   try {
     const {
@@ -26,7 +27,7 @@ exports.register = async (req, res) => {
       });
     }
     //return to stop code
-
+    console.log("bcrypt password");
     //To check if email id already exists
     const check = await User.findOne({ email });
     if (check) {
@@ -54,7 +55,8 @@ exports.register = async (req, res) => {
     }
 
     //bcrypt password
-    const encryptedPassword = await bcrypt.hash(password, 12);
+
+    let encryptedPassword = await bcrypt.hash(password, 12);
 
     //username
     let tempusername = first_name + last_name;
@@ -65,7 +67,7 @@ exports.register = async (req, res) => {
       last_name,
       email,
       username: newusername,
-      password,
+      password: encryptedPassword,
       bYear,
       bMonth,
       bDay,
@@ -76,8 +78,6 @@ exports.register = async (req, res) => {
       { id: user._id.toString() },
       "30m"
     );
-
-    console.log(emailVerificationToken);
 
     res.status(200).json(user);
   } catch (error) {
