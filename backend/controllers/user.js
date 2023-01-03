@@ -6,6 +6,7 @@ const {
 } = require("../helpers/validation");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../helpers/tokens");
+const { sendVerificationEmail } = require("../helpers/mailer");
 
 exports.register = async (req, res) => {
   try {
@@ -27,7 +28,7 @@ exports.register = async (req, res) => {
       });
     }
     //return to stop code
-    console.log("bcrypt password");
+
     //To check if email id already exists
     const check = await User.findOne({ email });
     if (check) {
@@ -78,8 +79,19 @@ exports.register = async (req, res) => {
       { id: user._id.toString() },
       "30m"
     );
-
-    res.status(200).json(user);
+    const url = `${process.env.BASE_URL}/activate/${emailVerificationToken}`;
+    sendVerificationEmail(user.email, user.first_name, url);
+    const token = generateToken({ id: user._id.toString() }, "7d");
+    res.status(200).send({
+      id: user._id,
+      username: user.username,
+      picture: user.picture,
+      first_name: user.first_name,
+      last_name: user.lastname,
+      token: token,
+      verified: user.verified,
+      message: "Register success ! Please activate your email to start",
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
