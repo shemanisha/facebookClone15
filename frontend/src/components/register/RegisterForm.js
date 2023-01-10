@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-export default function RegisterForm() {
+export default function RegisterForm({ setVisible }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfos = {
@@ -87,21 +87,21 @@ export default function RegisterForm() {
 
   const registerSubmit = async () => {
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/register`,
-        {
-          first_name,
-          last_name,
-          email,
-          password,
-          bYear,
-          bMonth,
-          bDay,
-        }
-      );
+      console.log(process.env.REACT_APP_BACKEND_URL);
+      const { data } = await axios.post(`http://localhost:8000/register`, {
+        first_name,
+        last_name,
+        email,
+        password,
+        bYear,
+        bMonth,
+        bDay,
+        gender,
+      });
       setError("");
       setSuccess(data.message);
       const { message, ...rest } = data;
+
       setTimeout(() => {
         dispatch({ type: "LOGIN", payload: rest });
         Cookies.set("user", JSON.stringify(rest));
@@ -110,7 +110,8 @@ export default function RegisterForm() {
     } catch (error) {
       setLoading(false);
       setSuccess("");
-      setError(error.message.data.message);
+      console.log(error.response.data.error);
+      setError(error.message);
     }
   };
 
@@ -118,7 +119,7 @@ export default function RegisterForm() {
     <div className="blur">
       <div className="register">
         <div className="register_header">
-          <i className="exit_icon"></i>
+          <i className="exit_icon" onClick={() => setVisible(false)}></i>
           <span>Sign Up</span>
           <span>It's quick and easy</span>
         </div>
