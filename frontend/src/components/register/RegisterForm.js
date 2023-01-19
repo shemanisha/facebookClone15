@@ -8,6 +8,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import DotLoader from "react-spinners/DotLoader";
 
 export default function RegisterForm({ setVisible }) {
   const dispatch = useDispatch();
@@ -100,6 +101,7 @@ export default function RegisterForm({ setVisible }) {
       });
       setError("");
       setSuccess(data.message);
+      console.log(data.message);
       const { message, ...rest } = data;
 
       setTimeout(() => {
@@ -110,8 +112,8 @@ export default function RegisterForm({ setVisible }) {
     } catch (error) {
       setLoading(false);
       setSuccess("");
-      console.log(error.response.data.error);
-      setError(error.message);
+      console.log(error.response.data.message);
+      setError(error.response.data.message);
     }
   };
 
@@ -150,7 +152,7 @@ export default function RegisterForm({ setVisible }) {
               setDateError(
                 " It Looks like you've entered the wrong info .Please make sure that you use your real date of birth"
               );
-            } else if (gender == "") {
+            } else if (gender == " ") {
               setDateError("");
               setGenderError(
                 " please choose a gender.You can change who can see this later."
@@ -303,6 +305,9 @@ export default function RegisterForm({ setVisible }) {
                   Sign Up
                 </button>
               </div>
+              {success && <div>{success}</div>}
+              {error && <div>{error}</div>}
+              <DotLoader color="#1876f2" loading={loading} size={150} />
             </Form>
           )}
         </Formik>

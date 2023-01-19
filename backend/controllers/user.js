@@ -129,7 +129,12 @@ exports.login = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: `Welcome ${user.first_name}`,
+        id: user._id,
+        username: user.username,
+        picture: user.picture,
+        first_name: user.first_name,
+        last_name: user.lastname,
+        verified: user.verified,
       });
     }
   } catch (error) {
