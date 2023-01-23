@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import DotLoader from "react-spinners/DotLoader";
 
 const loginInfos = {
   email: "",
@@ -36,10 +37,14 @@ export default function LoginForm({ setVisible }) {
 
   const loginSubmit = async () => {
     try {
-      const { data } = await axios.post(`http://localhost:8000/login`, {
-        email,
-        password,
-      });
+      setLoading(true);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/login`,
+        {
+          email,
+          password,
+        }
+      );
       setError("");
       setSuccess(data.message);
       console.log(data);
@@ -98,6 +103,7 @@ export default function LoginForm({ setVisible }) {
           <Link to="/forgot" className="forgot_password">
             Forgotten Password ?
           </Link>
+          <DotLoader color="#1876f2" loading={loading} size={150} />
           {error && <div className="error_txt">{error}</div>}
           <div className="sign_splitter"></div>
           <button

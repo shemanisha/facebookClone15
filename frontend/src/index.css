@@ -63,3 +63,13 @@ a {
   background: rgba(255, 255, 255, 0.768);
   z-index: 90;
 }
+
+.error_text {
+  color: #b94a48;
+  font-size: medium;
+}
+
+.success_text {
+  color: var(--green-color);
+  font-size: medium;
+}

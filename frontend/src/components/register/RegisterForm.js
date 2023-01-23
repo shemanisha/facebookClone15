@@ -89,16 +89,19 @@ export default function RegisterForm({ setVisible }) {
   const registerSubmit = async () => {
     try {
       console.log(process.env.REACT_APP_BACKEND_URL);
-      const { data } = await axios.post(`http://localhost:8000/register`, {
-        first_name,
-        last_name,
-        email,
-        password,
-        bYear,
-        bMonth,
-        bDay,
-        gender,
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/register`,
+        {
+          first_name,
+          last_name,
+          email,
+          password,
+          bYear,
+          bMonth,
+          bDay,
+          gender,
+        }
+      );
       setError("");
       setSuccess(data.message);
       console.log(data.message);
@@ -112,7 +115,6 @@ export default function RegisterForm({ setVisible }) {
     } catch (error) {
       setLoading(false);
       setSuccess("");
-      console.log(error.response.data.message);
       setError(error.response.data.message);
     }
   };
@@ -305,8 +307,8 @@ export default function RegisterForm({ setVisible }) {
                   Sign Up
                 </button>
               </div>
-              {success && <div>{success}</div>}
-              {error && <div>{error}</div>}
+              {success && <div className="success_text">{success}</div>}
+              {error && <div className="error_text">{error}</div>}
               <DotLoader color="#1876f2" loading={loading} size={150} />
             </Form>
           )}
