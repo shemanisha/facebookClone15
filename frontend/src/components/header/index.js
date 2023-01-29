@@ -1,5 +1,6 @@
 import "./style.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import {
   ArrowDown,
   Friends,
@@ -14,10 +15,13 @@ import {
   Watch,
 } from "../../svg";
 import { useSelector } from "react-redux";
+import SearchMenu from "./searchMenu";
+import AllMenu from "./AllMenu";
 
 export default function Header() {
   const color = "#65676b";
-  // const user = useSelector((user) => ({ ...user }));
+  const [showSearchMenu, setShowSearchMenu] = useState(false);
+  const user = useSelector((user) => ({ ...user }));
 
   return (
     <header>
@@ -27,7 +31,12 @@ export default function Header() {
             <Logo />
           </div>
         </Link>
-        <div className="search search1">
+        <div
+          className="search search1"
+          onClick={() => {
+            setShowSearchMenu(true);
+          }}
+        >
           <Search color={color} />
           <input
             type="text"
@@ -36,6 +45,9 @@ export default function Header() {
           ></input>
         </div>
       </div>
+      {showSearchMenu && (
+        <SearchMenu color={color} setShowSearchMenu={setShowSearchMenu} />
+      )}
       <div className="header_middle">
         <Link to="/" className="middle_icon active hover1">
           <HomeActive />
@@ -55,12 +67,13 @@ export default function Header() {
         </Link>
       </div>
       <div className="header_right">
-        <Link to="/profile" className="profile_link hover1">
-          <img src="user?.picture" alt="" />
-          <span>Manisha</span>
+        <Link to="/profile" className="profile_Link hover1">
+          <img src={user.user?.picture} alt="userImage" />
+          <span>{user.user?.first_name}</span>
         </Link>
         <div className="circle_icon hover1">
           <Menu />
+          <AllMenu />
         </div>
         <div className="circle_icon hover1">
           <Messenger />
