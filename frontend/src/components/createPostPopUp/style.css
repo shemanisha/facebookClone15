@@ -87,3 +87,12 @@
 }
 .box_privacy i {
 }
+
+/* ----hover---- */
+.hover1:hover {
+  background: var(--bg-secondary);
+}
+
+.hover2:hover {
+  background: var(--bg-third);
+}
